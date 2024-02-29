@@ -44,6 +44,7 @@ public class Main {
                 break;
             }
 
+//            System.out.println(dolphX + " : " + dolphY);
             int[] dolphRush = moveDolph(dolphX, dolphY);
 
             if (squares[dolphRush[1]][dolphRush[2]] == 0) {
@@ -170,16 +171,21 @@ public class Main {
 
                 if (isIn(newX, newY)) {
                     int distance = (int) (Math.pow(newX - s.x, 2) + Math.pow(newY - s.y, 2));
-                    array.add(new int[]{distance, newX, newY, i, s.x, s.y});
+                    int newDistance = (int) (Math.pow(dx - s.x, 2) + Math.pow(dy - s.y, 2));
+                    array.add(new int[]{distance, newX, newY, i, s.x, s.y, newDistance});
                 }
             }
         }
         Collections.sort(array, (p1, p2) -> {
-            int compare = Integer.compare(p1[0], p2[0]);
+            int compare = Integer.compare(p1[6], p2[6]);
             if (compare == 0) {
-                compare = Integer.compare(p2[4], p1[4]);
+                compare = Integer.compare(p1[0], p2[0]);
                 if (compare == 0) {
-                    compare = Integer.compare(p2[5], p1[5]);
+                    compare = Integer.compare(p2[4], p1[4]);
+                    if (compare == 0) {
+                        compare = Integer.compare(p2[5], p1[5]);
+                        return compare;
+                    }
                     return compare;
                 }
                 return compare;
