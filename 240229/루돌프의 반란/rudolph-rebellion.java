@@ -36,6 +36,14 @@ public class Main {
         }
 
         for (int turn = 1; turn <= M; turn++) {
+            boolean isBreak = true;
+            for (Santa s : santas.values()) {
+                isBreak = isBreak && s.isOut;
+            }
+            if (isBreak) {
+                break;
+            }
+
             int[] dolphRush = moveDolph(dolphX, dolphY);
 
             if (squares[dolphRush[1]][dolphRush[2]] == 0) {
@@ -178,7 +186,7 @@ public class Main {
             }
             return compare;
         });
-        return array.get(0);
+        return array.size() == 0 ? new int[]{0, dx, dy, 0} : array.get(0);
     }
 
     private static int[] moveSanta(int sx, int sy, int dx, int dy) {
