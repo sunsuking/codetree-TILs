@@ -47,7 +47,7 @@ public class Main {
             if (isBreak) break;
 
 //            System.out.println(dolphX + " : " + dolphY);
-            int[] dolphRush = moveDol(dolphX, dolphY);
+            int[] dolphRush = moveDolph(dolphX, dolphY);
 //            System.out.println(Arrays.toString(dolphRush));
 
             if (squares[dolphRush[1]][dolphRush[2]] != 0 && squares[dolphRush[1]][dolphRush[2]] != 100) {
@@ -161,39 +161,6 @@ public class Main {
         squares[x2][y2] = temp;
     }
 
-    private static void push(Santa s, int sX, int sY, int[] delta) {
-        if (s == null) return;
-        if (squares[sX][sY] == 0) {
-            squares[sX][sY] = s.num;
-            s.x = sX;
-            s.y = sY;
-        } else {
-            Santa nS = santas.get(squares[sX][sY]);
-            squares[sX][sY] = s.num;
-            s.x = sX;
-            s.y = sY;
-
-            // 다음 위치
-            sX += delta[0];
-            sY += delta[1];
-
-            // 배열 내부라면
-            if (isIn(sX, sY)) {
-                if (squares[sX][sY] == 0) {
-                    squares[sX][sY] = nS.num;
-                    nS.x = sX;
-                    nS.y = sY;
-                } else {
-                    push(nS, sX, sY, delta);
-                }
-            }
-            // 배열 밖이라면 나가게하기
-            else {
-                nS.isOut = true;
-            }
-        }
-    }
-
     private static int[] moveDol(int dx, int dy) {
         int index = searchDir(dx, dy);
         int newDx = dx + dolph[index][0];
@@ -290,15 +257,16 @@ public class Main {
                 }
             }
         }
+//        for (int[] a : array) System.out.println(Arrays.toString(a));
+
         array.sort((p1, p2) -> {
-            int compare = Integer.compare(p1[0], p2[0]);
+            int compare = Integer.compare(p1[6], p2[6]);
             if (compare == 0) {
-                compare = Integer.compare(p1[6], p2[6]);
+                compare = Integer.compare(p2[4], p1[4]);
                 if (compare == 0) {
-                    compare = Integer.compare(p2[4], p1[4]);
+                    compare = Integer.compare(p2[5], p1[5]);
                     if (compare == 0) {
-                        compare = Integer.compare(p2[5], p1[5]);
-                        return compare;
+                        return Integer.compare(p1[0], p2[0]);
                     }
                     return compare;
                 }
